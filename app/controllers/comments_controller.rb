@@ -9,10 +9,10 @@ class CommentsController < ApplicationController
         @comment.post = @post
         @comment.user = current_user
         if @comment.save
-            flash[:notice] = 'Comment Created Successfully'
+            flash[:notice] = 'Comment created'
             redirect_to post_path(@post)
         else
-            flash[:error] = 'Comment invalid. message is empty'
+            flash[:error] = 'Comment invalid. The message is empty'
             redirect_to post_path(@post)
         end
     end

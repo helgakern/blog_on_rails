@@ -1,0 +1,15 @@
+<h1 class = "title">Log In</h1>
+<% flash[:alert]%>
+<%= form_with url: sessions_path, class:"grid-container layout2", local: true do |f|%>
+    <div>
+        <%= f.label :email%>
+        <%= f.email_field:email, class:"layout2"%>
+    </div>
+
+    <div>
+        <%=f.label :password %>
+        <%=f.password_field :password, class:"layout2"%>
+    </div>
+
+    <%=f.submit "Log In", :class => "button2"%>
+<%end%>

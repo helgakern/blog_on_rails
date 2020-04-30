@@ -1,6 +1,8 @@
-<h1>All Posts</h1>
-<% @posts.each do |post| %>
-<ul>
-    <li><%= link_to post.title, post_path(post) %></li>
-</ul>
-<% end %>
+<article class="grid-container layout">
+<% @posts.each do |post|%>
+<div class="grid-item">
+    <h4><%= link_to(post.title,post_path(post.id)) %></h4>
+    <p class="row"><%= post.body.truncate(50,separate:' ') %></p>
+</div>
+<%end%>
+</article>

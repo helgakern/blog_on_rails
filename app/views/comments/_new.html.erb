@@ -1,0 +1,11 @@
+<%=form_with(model: [post, comment], local:true) do |form|%>
+    <div>
+        <%= form.label :Comment, autofocus:true%><br>
+        <%= form.text_area :message, cols: 50, rows:1, placeholder:"What's your mind?", class:"layout2"%>
+    </div>
+
+    <div>
+        <%= form.submit "Submit", class:"button"%>
+    </div>
+
+<%end%>

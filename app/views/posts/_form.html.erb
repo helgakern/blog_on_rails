@@ -1,19 +1,22 @@
-# <% if @post.errors.any? %>
-#     <ul>
-#         <% @post.errors.full_messages.each do |msg| %>
-#             <li><%= msg %></li>
-#         <% end %>    
-#     </ul>
-# <% end %>
+<%= form_with(model: @post, local: true, class:"grid-container layout2") do |form|%>
 
-<%= form_for @post do |f| %>
-    <div>
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-    </div>
-    <div>
-        <%= f.label :body %>
-        <%= f.text_area :body %>
-    </div>
-    <%= f.submit %>
+<div>
+    <%= form.label :title%><br>
+    <%= form.text_field :title, class:"layout2"%>
+</div>
+
+<div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body, cols: 50, rows:5, class:"layout2"%>
+    <br>
+</div>
+
+<% if @post.id 
+        type = "Edit" 
+    else 
+        type = "New" 
+end %>
+
+<%= form.submit "#{type} post", :class => "button2"%>
+
 <% end %>

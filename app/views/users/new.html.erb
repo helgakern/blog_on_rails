@@ -1,0 +1,32 @@
+<h1 class = "title">Please sign up</h1>
+
+<%= form_with model: @user, class:"grid-container layout2", local: true do |f|%>
+    <% if @user.errors.any? %>
+        <p>
+        <%= @user.errors.full_messages.join(',')%>
+        </p>
+    <%end%>
+
+   <div>
+        <%= f.label :name %>
+        <%= f.text_field :name, class:"layout2" %>
+    </div>
+
+    <div>
+        <%= f.label :email %>
+        <%= f.email_field :email, class:"layout2"%>
+    </div>
+
+    <div>
+        <%= f.label :password %>
+        <%= f.password_field :password, class:"layout2" %>
+    </div>
+
+    <div>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class:"layout2" %>
+    </div>
+
+    <%= f.submit "Sign Up", :class => "button2"%>
+
+<%end%>

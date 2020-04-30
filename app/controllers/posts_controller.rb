@@ -8,9 +8,17 @@ class PostsController < ApplicationController
         post_params = param.require(:post).permit(:title, :body)
         @post = Post.new post_params
         if @post.save
-            render plain: 'Post Created'
+            redirect_to @post
         else
             render :new
         end
+    end
+
+    def show
+        @post = Post.find params[:id]
+    end
+
+    def index
+        @posts = Post.order(created_at: :DESC)
     end
 end

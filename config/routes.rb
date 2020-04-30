@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   post "/posts" => "posts#create", as: :posts
   get "/posts/:id" => "posts#show", as: :post
   get "/posts" => "posts#index"
+  delete "/posts/:id" => "posts#destroy"
 end

@@ -1,7 +1,11 @@
 class PostsController < ApplicationController
-    # before_action :authenticate_user!, except: [:index, :show]
-    # before_action :load_post!, except: [:create]
-    # before_action :authorize_user!, only: [:edit, :update, :destroy]
+    before_action :authenticate_user!, except: [:index, :show]
+    before_action :load_post!, except: [:create]
+    before_action :authorize_user!, only: [:edit, :update, :destroy]
+    
+    def index
+        @posts = Post.all.order('created_at DESC')
+    end
 
     def new
     end
@@ -20,17 +24,12 @@ class PostsController < ApplicationController
         @comments = Comment.new
     end
 
-    def index
-        @posts = Post.all.order('created_at DESC')
-    end
-
     def destroy
         @post.destroy
         redirect_to posts_path
     end
 
     def edit
-        @post = Post.find params[:id]
     end
 
     def update

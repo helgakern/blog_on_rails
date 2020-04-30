@@ -19,7 +19,7 @@ super_user = User.create(
     is_admin: true
 )
 
-10.times do
+100.times do
     name = Faker::Name.middle_name
     User.create(
         name: name,
@@ -31,7 +31,7 @@ end
 users = User.all
 puts "created #{users.count} users"
 
-50.times do
+500.times do
     user= users.sample
     p = Post.create(
         title: Faker::Hacker.say_something_smart,
@@ -49,7 +49,7 @@ puts "created #{users.count} users"
             })
         end
     else
-        puts "Invalid post!"
+        puts "Invalid post!!"
         puts p
     end
 end

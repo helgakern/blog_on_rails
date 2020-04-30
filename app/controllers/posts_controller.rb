@@ -21,9 +21,9 @@ class PostsController < ApplicationController
             if @post.title == "" || !@post.title
                 flash[:error] = 'Post invalid. Please put a title'
             elsif @post.body == "" || !@post.body
-                flash[:error] = 'Post invalid. the text box is empty'
+                flash[:error] = 'Post invalid. The text box is empty'
             else
-                flash[:error] = 'something wrong noooo!'
+                flash[:error] = 'Ops. Something is wrong!'
             end
             render :new
         end
@@ -31,13 +31,13 @@ class PostsController < ApplicationController
 
     def update
         if @post.update post_params
-            flash[:notice] = 'post updated Successfully'
+            flash[:notice] = 'Post updated'
             redirect_to post_path(@post.id)
         else
             if @post.title == "" || !@post.title
                 flash[:error] = 'Update invalid. Please put a title'
             elsif @post.body == "" || !@post.body
-                flash[:error] = 'Update invalid. the text box is empty'
+                flash[:error] = 'Update invalid. The text box is empty'
             end
             render :edit
         end

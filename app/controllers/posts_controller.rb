@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
-    before_action :authenticate_user!, except: [:index, :show]
-    before_action :load_post!, except: [:create]
-    before_action :authorize_user!, only: [:edit, :update, :destroy]
+    # before_action :authenticate_user!, except: [:index, :show]
+    # before_action :load_post!, except: [:create]
+    # before_action :authorize_user!, only: [:edit, :update, :destroy]
 
     def new
     end
@@ -30,6 +30,7 @@ class PostsController < ApplicationController
     end
 
     def edit
+        @post = Post.find params[:id]
     end
 
     def update

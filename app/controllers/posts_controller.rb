@@ -1,27 +1,51 @@
 class PostsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
-    before_action :load_post!, except: [:create]
-    before_action :authorize_user!, only: [:edit, :update, :destroy]
-    
+    before_action :find_post, only: [:edit,:update,:show,:destroy]
+    before_action :authorize!, only: [:edit,:update,:destroy]
+
     def index
         @posts = Post.all.order('created_at DESC')
     end
 
     def new
+        @post = Post.new
     end
 
     def create
         @post = Post.new post_params
-        @post.user = @current_user
+        @post.user = current_user
         if @post.save
-            render(plain: "Created Post #{@post.inspect}")
+            flash[:notice] = 'Post Created Successfully'
+            redirect_to posts_path(@post.id)
         else
+            if @post.title == "" || !@post.title
+                flash[:error] = 'Post invalid. Please put a title'
+            elsif @post.body == "" || !@post.body
+                flash[:error] = 'Post invalid. the text box is empty'
+            else
+                flash[:error] = 'something wrong noooo!'
+            end
             render :new
         end
     end
 
+    def update
+        if @post.update post_params
+            flash[:notice] = 'post updated Successfully'
+            redirect_to post_path(@post.id)
+        else
+            if @post.title == "" || !@post.title
+                flash[:error] = 'Update invalid. Please put a title'
+            elsif @post.body == "" || !@post.body
+                flash[:error] = 'Update invalid. the text box is empty'
+            end
+            render :edit
+        end
+    end
+
     def show
-        @comments = Comment.new
+        @comments = @post.comments.order('created_at DESC')
+        @comment = @post.comments.build
     end
 
     def destroy
@@ -29,35 +53,19 @@ class PostsController < ApplicationController
         redirect_to posts_path
     end
 
-    def edit
-    end
-
-    def update
-        if @post.update post_params
-            redirect_to posts_path @post
-        else
-            render :edit
-        end
-    end
 
     private
 
+    def find_post
+        @post=Post.find params[:id]
+    end
     def post_params
         params.require(:post).permit(:title, :body)
     end
 
-    def authorize_user!
-        unless can? :crud, @post
-            flash[:danger] = "Access Denied"
-            redirect_to root_path
-        end
-    end
-
-    def load_post!
-        if params[:id].present?
-            @post = Post.find(params[:id])
-        else
-            @post = Post.new
+    def authorize! 
+        unless can?(:crud, @post)
+            redirect_to root_path, alert: 'Not Authorized' 
         end
     end
 end
